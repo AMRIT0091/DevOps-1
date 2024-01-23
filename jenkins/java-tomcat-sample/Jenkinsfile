@@ -49,5 +49,11 @@ pipeline {
         sh '''
        }
      }
+      stage('deploy from compose'){
+        steps {
+          echo "we are deploying from compose"
+          docker compose up -d 
+        }
+      }
 }
 }
