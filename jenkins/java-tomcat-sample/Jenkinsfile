@@ -19,16 +19,29 @@ pipeline {
         sh '''
         original_pwd=$(pwd -P)
         cd jenkins/java-tomcat-sample
-        docker build -t localtomcatimg:v7 .
+        docker build -t localtomcatimg:$BUILD_NUMBER .
         cd $original_pwd
         sh '''
        }
      }
-     stage('deploy'){
+     stage('deploy in QA instance'){
        steps {
         echo "we are deploying the app"
         sh '''
-        docker container run -itd -p 8083:8080 localtomcatimg:v7
+        docker container stop localtomcatinstance || true
+        docker container rm localtomcatinstance || true
+        docker container run -itd --name localtomcatinstance -p 8083:8080 localtomcatimg:$BUILD NUMBER
+    
+        sh '''
+       }
+     }
+      stage('deploy in Stagig Instace
+       steps {
+        echo "we are deploying the app staggin enviroment"
+        sh '''
+        docker container stop localstaging || true
+        docker container rm localstaging || true
+        docker container run -itd --name localstaging -p 8084:8080 localtomcatimg:$BUILD NUMBER
     
         sh '''
        }
