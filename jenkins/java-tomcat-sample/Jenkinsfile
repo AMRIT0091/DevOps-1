@@ -3,7 +3,7 @@ pipeline {
     stages {
       stage('BUild Application'){
         steps {
-          sh 'mvn -f jenkins/java-tomcat-sample/pom.xml clean package'
+          sh 'mvn -f jenkins/java-tomcat-sample/pom.xml create package'
        }
        post {
         success {
@@ -12,9 +12,16 @@ pipeline {
         }
        }
      }
-    stage('build'){
+    stage('CreateTomcatImage'){
        steps {
-        echo "we are learining build, building the code nowe"
+        copyArtifacts filter: '**/*.war', fingerprintArtifacts: true, projectName: env.JOB_NAME, selector: lastSuccessful()
+        echo "buiding docker images"
+        sh '''
+        original_pwd=$(pwd -p)
+        cd jenkins/java-tomcat-sample
+        docker build -t localtomcatimg:$BUILD_NUMBER .
+        cd $jenkins/java-tomcat-sample
+        sh '''
        }
      }
      stage('deploy'){
