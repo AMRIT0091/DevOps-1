@@ -52,8 +52,7 @@ pipeline {
       stage('deploy from compose'){
         steps {
           echo "we are deploying from compose"
-          sh 'pwd -P'
-          sh 'ls'
+          sh 'cd /var/lib/jenkins/workspace/maven-project-pipeline/jenkins/java-tomcat-sample/'
           sh 'docker compose up -d'
         }
       }
