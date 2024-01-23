@@ -37,6 +37,9 @@ pipeline {
      }
       stage('deploy in Stagig Instace'){
        steps {
+         timeout(time:2, unit:'MINUTES'){
+           input message: 'Approve thre staging deployment'
+         }
         echo "we are deploying the app staggin enviroment"
         sh '''
         docker container stop localstaging || true
