@@ -35,7 +35,7 @@ pipeline {
         sh '''
        }
      }
-      stage('deploy in Stagig Instace
+      stage('deploy in Stagig Instace')
        steps {
         echo "we are deploying the app staggin enviroment"
         sh '''
