@@ -30,7 +30,7 @@ pipeline {
         sh '''
         docker container stop localtomcatinstance || true
         docker container rm localtomcatinstance || true
-        docker container run -itd --name localtomcatinstance -p 8083:8080 localtomcatimg:$BUILD NUMBER
+        docker container run -itd --name localtomcatinstance -p 8083:8080 localtomcatimg:$BUILD_NUMBER
     
         sh '''
        }
@@ -41,7 +41,7 @@ pipeline {
         sh '''
         docker container stop localstaging || true
         docker container rm localstaging || true
-        docker container run -itd --name localstaging -p 8084:8080 localtomcatimg:$BUILD NUMBER
+        docker container run -itd --name localstaging -p 8084:8080 localtomcatimg:$BUILD_NUMBER
     
         sh '''
        }
