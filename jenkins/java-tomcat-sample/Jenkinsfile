@@ -15,9 +15,9 @@ pipeline {
        }
      }
     stage('CreateTomcatImage'){
-      agent {
-        label 'builtin-node'
-      }
+       agent {
+    label 'amrit-slave-node'
+  }
        steps {
         copyArtifacts filter: '**/*.war', fingerprintArtifacts: true, projectName: env.JOB_NAME, selector: lastSuccessful()
         echo "buiding docker images"
@@ -30,6 +30,9 @@ pipeline {
        }
      }
      stage('deploy in QA instance'){
+        agent {
+    label 'amrit-slave-node'
+  }
        steps {
         echo "we are deploying the app"
         sh '''
@@ -41,6 +44,9 @@ pipeline {
        }
      }
       stage('deploy in Stagig Instace'){
+         agent {
+    label 'builtin-node'
+  }
        steps {
          timeout(time:2, unit:'MINUTES'){
            input message: 'Approve thre staging deployment'
@@ -55,6 +61,9 @@ pipeline {
        }
      }
       stage('deploy from compose'){
+         agent {
+    label 'amrit-slave-node'
+  }
         steps {
           echo "we are deploying from compose"
           sh 'cd /var/lib/jenkins/workspace/maven-project-pipeline/jenkins/java-tomcat-sample/'
