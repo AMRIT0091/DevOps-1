@@ -71,7 +71,7 @@ pipeline {
         }
       }
 }
-      post {
+   post {
     always {
       mail to: 'shrestha.amrit94@gmail.com',
       subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) complete running"
