@@ -70,12 +70,12 @@ pipeline {
           sh 'docker compose up -d'
         }
       }
-  post {
+}
+}
+ post {
     always {
       mail to: 'shrestha.amrit94@gmail.com',
       subject: "Job '${JOB_NAME}' (${BUILD_NUMBER}) complete running"
       body: "please go to ${BUILD_URL} and verify the build"
     }
   }
-}
-}
